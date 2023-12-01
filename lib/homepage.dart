@@ -1,11 +1,26 @@
-import 'package:find_travel_companion/arkaplan.dart';
 import 'package:find_travel_companion/chatpage.dart';
 import 'package:find_travel_companion/editprofile.dart';
 import 'package:find_travel_companion/searchresult.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  DateTime? departureDate;
+  DateTime? returnDate;
+
+  @override
+  void initState() {
+    super.initState();
+    // Set default values for departure and return dates
+    departureDate = DateTime.now();
+    returnDate = DateTime.now();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,46 +45,48 @@ class HomePage extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Container(
-                padding: EdgeInsets.only(top: 50.0),
-                child: ListTile(
-                  leading: InkWell(
-                    onTap: () {
+              padding: EdgeInsets.only(top: 50.0),
+              child: ListTile(
+                leading: InkWell(
+                  onTap: () {
+                    // Navigate to the EditProfile page
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EditProfile()));
+                  },
+                  child: CircleAvatar(
+                    radius: 30,
+                    backgroundImage: AssetImage("assets/images/profile.jpg"),
+                  ),
+                ),
+                title: Text(
+                  'Find Travel Companion',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.black87,
+                      fontFamily: 'Roboto'),
+                ),
+                trailing: Container(
+                  child: IconButton(
+                    onPressed: () {
+                      // Navigate to the ChatPage
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  EditProfile())); // Bir önceki sayfaya geri dön
+                              builder: (context) => ChatPage()));
                     },
-                    child: CircleAvatar(
-                      radius: 30,
-                      backgroundImage: AssetImage("assets/images/profile.jpg"),
+                    icon: Image.asset(
+                      'assets/icons/chat2.png',
+                      width: 100,
+                      height: 100,
                     ),
                   ),
-                  title: Text(
-                    'Find Travel Companion',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w900,
-                        color: Colors.black87,
-                        fontFamily: 'Roboto'),
-                  ),
-                  trailing: Container(
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ChatPage()));
-                      },
-                      icon: Image.asset(
-                        'assets/icons/chat2.png', // İkonunuzun dosya yolu
-                        width: 100, // İkonun genişliği
-                        height: 100, // İkonun yüksekliği
-                      ),
-                    ),
-                  ),
-                )),
+                ),
+              ),
+            ),
             Container(
               child: Row(
                 children: [
@@ -77,15 +94,15 @@ class HomePage extends StatelessWidget {
                     'assets/images/plane.png',
                     width: 280,
                     height: 300,
-                  ), // İlk resim
+                  ),
                   SizedBox(
-                      width:
-                          0), // İki resim arasında boşluk bırakmak için SizedBox kullanabilirsiniz
+                    width: 0,
+                  ),
                   Image.asset(
                     'assets/images/car.jpeg',
                     width: 120,
                     height: 120,
-                  ), // İkinci resim
+                  ),
                 ],
               ),
             ),
@@ -94,14 +111,14 @@ class HomePage extends StatelessWidget {
                 color: Colors.white54,
                 borderRadius: BorderRadius.circular(30.0),
                 border: Border.all(
-                  color: Color(0xFFA0B2D7), // Set the border color to black
-                  width: 2.0, // Set the border width
+                  color: Color(0xFFA0B2D7),
+                  width: 2.0,
                 ),
               ),
-              width: 350.0, // Set the width of the container
-              height: 400.0, // Set the height of the container
+              width: 350.0,
+              height: 400.0,
               padding:
-                  EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
+              EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
               child: Column(
                 children: <Widget>[
                   Container(
@@ -118,34 +135,33 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   Container(
-                      padding: EdgeInsets.all(10),
-                      height: 40,
-                      width: 280,
-                      decoration: BoxDecoration(
-                        color: Color(0xFFE8EAF6),
-                        borderRadius: BorderRadius.circular(30.0),
+                    padding: EdgeInsets.all(10),
+                    height: 40,
+                    width: 280,
+                    decoration: BoxDecoration(
+                      color: Color(0xFFE8EAF6),
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: DropdownButton<String>(
+                        icon: Icon(Icons.keyboard_arrow_down_rounded,
+                            color: Colors.black),
+                        iconSize: 32.0,
+                        items: ['Location A', 'Location B', 'Location C']
+                            .map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (String? value) {
+                          print('Selected Location: $value');
+                        },
                       ),
-                      child: Align(
-                        alignment: Alignment.topRight,
-                        child: DropdownButton<String>(
-                          icon: Icon(Icons.keyboard_arrow_down_rounded,
-                              color: Colors.black), // Custom icon
-                          iconSize: 32.0, // Adjust icon size as needed
-                          //hint: Text("Select Location"),
-                          items: ['Location A', 'Location B', 'Location C']
-                              .map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                          onChanged: (String? value) {
-                            // Handle location selection
-                            print('Selected Location: $value');
-                          },
-                        ),
-                      )),
-                  SizedBox(height: 20), // Add some space between dropdowns
+                    ),
+                  ),
+                  SizedBox(height: 20),
                   Container(
                     padding: EdgeInsets.all(10),
                     child: Align(
@@ -160,39 +176,38 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   Container(
-                      padding: EdgeInsets.all(10),
-                      height: 40,
-                      width: 280,
-                      decoration: BoxDecoration(
-                        color: Color(0xFFE8EAF6),
-                        borderRadius: BorderRadius.circular(30.0),
+                    padding: EdgeInsets.all(10),
+                    height: 40,
+                    width: 280,
+                    decoration: BoxDecoration(
+                      color: Color(0xFFE8EAF6),
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: DropdownButton<String>(
+                        icon: Icon(Icons.keyboard_arrow_down_rounded,
+                            color: Colors.black),
+                        iconSize: 32.0,
+                        items: [
+                          'Destination A',
+                          'Destination B',
+                          'Destination C'
+                        ].map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (String? value) {
+                          print('Selected Destination: $value');
+                        },
                       ),
-                      child: Align(
-                        alignment: Alignment.topRight,
-                        child: DropdownButton<String>(
-                          icon: Icon(Icons.keyboard_arrow_down_rounded,
-                              color: Colors.black), // Custom icon
-                          iconSize: 32.0, // Adjust icon size as needed
-
-                          items: [
-                            'Destination A',
-                            'Destination B',
-                            'Destination C'
-                          ].map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                          onChanged: (String? value) {
-                            // Handle location selection
-                            print('Selected Destination: $value');
-                          },
-                        ),
-                      )),
+                    ),
+                  ),
                   SizedBox(height: 10),
                   Container(
-                    padding: EdgeInsets.only(top: 10,left: 10,right: 10),
+                    padding: EdgeInsets.only(top: 10, left: 10, right: 10),
                     child: Row(
                       children: [
                         Container(
@@ -200,20 +215,31 @@ class HomePage extends StatelessWidget {
                             children: [
                               Row(
                                 children: [
-                                  Text("Deparature",
+                                  Text("Departure",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Color(0xDF2C2B2B),
                                       )),
-                                  SizedBox(width: 10,),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
                                   IconButton(
-                                    onPressed: () {
-                                      // Show the calendar screen
-                                      showCalendarDialog(context);
+                                    onPressed: () async {
+                                      DateTime? selectedDate =
+                                      await showCalendarDialog(
+                                          context, departureDate);
+                                      if (selectedDate != null) {
+                                        setState(() {
+                                          departureDate = selectedDate;
+                                        });
+                                      }
                                     },
-                                      icon: Image.asset("assets/icons/calender.png",
-                                        width: 100,height: 100,),)
-                                  //TableCalendar(focusedDay: DateTime.now(), firstDay: DateTime.now(), lastDay: DateTime.utc(2030,12,30))
+                                    icon: Image.asset(
+                                      "assets/icons/calender.png",
+                                      width: 30,
+                                      height: 30,
+                                    ),
+                                  ),
                                 ],
                               ),
                               Container(
@@ -223,9 +249,12 @@ class HomePage extends StatelessWidget {
                                   color: Color(0xFFCDD3E0),
                                   borderRadius: BorderRadius.circular(20.0),
                                 ),
-                                child: Container(
-                                    margin: EdgeInsets.only(left: 20,right: 10,top: 10,bottom: 10),
-                                    child: Text("2023/11/25"),
+                                child: Center(
+                                  child: Text(
+                                    departureDate != null
+                                        ? "${departureDate!.year}/${departureDate!.month}/${departureDate!.day}"
+                                        : "Select Departure Date",
+                                  ),
                                 ),
                               )
                             ],
@@ -239,18 +268,31 @@ class HomePage extends StatelessWidget {
                             children: [
                               Row(
                                 children: [
-                                  Text("Return",style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Color(0xDF2C2B2B),
-                                  )),
-                                  SizedBox(width: 10,),
+                                  Text("Return",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xDF2C2B2B),
+                                      )),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
                                   IconButton(
-                                    onPressed: () {
-                                      // Show the calendar screen
-                                      showCalendarDialog(context);
+                                    onPressed: () async {
+                                      DateTime? selectedDate =
+                                      await showCalendarDialog(
+                                          context, returnDate);
+                                      if (selectedDate != null) {
+                                        setState(() {
+                                          returnDate = selectedDate;
+                                        });
+                                      }
                                     },
-                                    icon: Image.asset("assets/icons/calender.png",
-                                      width: 100,height: 100,),)
+                                    icon: Image.asset(
+                                      "assets/icons/calender.png",
+                                      width: 30,
+                                      height: 30,
+                                    ),
+                                  ),
                                 ],
                               ),
                               Container(
@@ -260,9 +302,12 @@ class HomePage extends StatelessWidget {
                                   color: Color(0xFFCDD3E0),
                                   borderRadius: BorderRadius.circular(20.0),
                                 ),
-                                child: Container(
-                                  margin: EdgeInsets.only(left: 20,right: 10,top: 10,bottom: 10),
-                                  child: Text("2023/11/25"),
+                                child: Center(
+                                  child: Text(
+                                    returnDate != null
+                                        ? "${returnDate!.year}/${returnDate!.month}/${returnDate!.day}"
+                                        : "Select Return Date",
+                                  ),
                                 ),
                               )
                             ],
@@ -271,16 +316,18 @@ class HomePage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(height: 40,),
+                  SizedBox(
+                    height: 40,
+                  ),
                   Container(
-
                     child: MaterialButton(
                       minWidth: 100,
                       height: 50,
-
                       onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => SearchResult()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SearchResult()));
                       },
                       color: Color(0xFF2197D5),
                       elevation: 0,
@@ -306,24 +353,20 @@ class HomePage extends StatelessWidget {
     );
   }
 
-
-  void showCalendarDialog(BuildContext context) {
-    showDialog(
+  Future<DateTime?> showCalendarDialog(
+      BuildContext context, DateTime? initialDate) async {
+    DateTime? selectedDate = await showDatePicker(
       context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Select Date'),
-          content:Text("Calender"),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context); // Close the dialog
-              },
-              child: Text('Close'),
-            ),
-          ],
-        );
-      },
+      initialDate: initialDate ?? DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
     );
+
+    return selectedDate;
   }
 }
+
+
+
+
+
