@@ -1,8 +1,9 @@
 import 'package:find_travel_companion/chatpage.dart';
 import 'package:find_travel_companion/editprofile.dart';
+import 'package:find_travel_companion/main_chat_page.dart';
 import 'package:find_travel_companion/searchresult.dart';
 import 'package:flutter/material.dart';
-import 'package:table_calendar/table_calendar.dart';
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -76,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ChatPage()));
+                              builder: (context) => MainChatPage()));
                     },
                     icon: Image.asset(
                       'assets/icons/chat2.png',
