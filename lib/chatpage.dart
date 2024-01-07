@@ -56,21 +56,8 @@ class ChatPage extends StatelessWidget{
                 ),),
               ),
               SizedBox(height: 8,),
-              Container(
-                decoration:BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Color(0xff373E4E)
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Text('Hello',style: TextStyle(
-                    color: Colors.white,
-                  ),),
-                ),
-              ),
-              SizedBox(height: 10,),
               Padding(
-                padding: const EdgeInsets.only(left: 70.0),
+                padding: const EdgeInsets.only(left: 300.0),
                 child: Container(
                   decoration:BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
@@ -84,19 +71,7 @@ class ChatPage extends StatelessWidget{
                   ),
                 ),
               ),
-              SizedBox(height: 10,),
-              Container(
-                decoration:BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Color(0xff373E4E)
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Text('Ankaraya seyahat etmek istiyorum',style: TextStyle(
-                    color: Colors.white,
-                  ),),
-                ),
-              ),
+
               SizedBox(height: 10,),
               const Spacer(),
               Padding(

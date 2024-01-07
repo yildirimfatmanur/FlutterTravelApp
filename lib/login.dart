@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:find_travel_companion/homepage.dart';
 import 'package:find_travel_companion/main.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
+  final TextEditingController _mailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,8 +67,16 @@ class LoginPage extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 40),
                   child: Column(
                     children: <Widget>[
-                      inputFile(label: "Email"),
-                      inputFile(label: "Password", obscureText: true)
+                      reusableTextField("Enter E-mail", Icons.mail_outlined, false,
+                          _mailController),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      reusableTextField("Enter Password", Icons.lock_outlined, false,
+                          _passwordController),
+                      const SizedBox(
+                        height: 20,
+                      ),
                     ],
                   ),
                 ),
@@ -124,34 +136,32 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-Widget inputFile({label, obscureText = false}) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Text(
-        label,
-        style: TextStyle(
-            fontSize: 15, fontWeight: FontWeight.w400, color: Colors.white),
+TextField reusableTextField(String text, IconData icon, bool isPasswordType,
+    TextEditingController controller) {
+  return TextField(
+    controller: controller,
+    obscureText: isPasswordType,
+    enableSuggestions: !isPasswordType,
+    autocorrect: !isPasswordType,
+    cursorColor: Colors.white,
+    style: TextStyle(color: Colors.white.withOpacity(0.9)),
+    decoration: InputDecoration(
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Color(0xFF9CA6FF)),
+        borderRadius: BorderRadius.circular(15),
       ),
-      SizedBox(
-        height: 5,
-      ),
-      TextField(
-        obscureText: obscureText,
-        decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0xFF9CA6FF)),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0xFF9CA6FF)),
-              borderRadius: BorderRadius.circular(15),
-            )),
-      ),
-      SizedBox(
-        height: 10,
-      )
-    ],
+      prefixIcon: Icon(icon, color: Colors.white70,),
+      labelText: text,
+      labelStyle: TextStyle(color: Colors.white.withOpacity(0.9)),
+      filled: true,
+      floatingLabelBehavior: FloatingLabelBehavior.never,
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: Color(0xFF9CA6FF)),
+          borderRadius: BorderRadius.circular(15),
+        ),
+    ),
+    keyboardType: isPasswordType
+        ? TextInputType.visiblePassword
+        : TextInputType.emailAddress,
   );
 }

@@ -115,7 +115,7 @@ class MainChatPage extends StatelessWidget {
                                 height: 5,
                               ),
                               Text(
-                                'mehmetkoc@gmail.com',
+                                'hello',
                                 style: TextStyle(
                                   color: Colors.white70,
                                 ),

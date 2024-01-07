@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "781763091225",
+    "project_id": "friendapp-73341",
+    "storage_bucket": "friendapp-73341.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:781763091225:android:3ba76499cca952c9018388",
+        "android_client_info": {
+          "package_name": "com.example.find_travel_companion"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNwNBmHn7gvM6LFTiILPtW4h6B8Ckgof0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

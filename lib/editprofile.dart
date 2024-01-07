@@ -36,23 +36,12 @@ class EditProfile extends StatelessWidget {
                       children: <Widget>[
                         Align(
                           alignment: Alignment.topLeft,
-                          child: IconButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            icon: Icon(
-                              Icons.arrow_back_ios,
-                              size: 30,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
+                          child: IconButton(onPressed: () {Navigator.pop(context);}, icon: Icon(Icons.arrow_back_ios, size: 30, color: Colors.black,),),),
                         SizedBox(width: 8), // Boşluk ekledik
                         CircleAvatar(
                           radius: 30,
                           backgroundImage: AssetImage("assets/images/profile.jpg"),
                         ),
-                        // Diğer widget'ları buraya ekleyebilirsiniz.
                       ],
                     ),
                   ),
@@ -87,7 +76,7 @@ class EditProfile extends StatelessWidget {
                   inputFile(label: "Hobbies", default_val: "Camping"),
                   inputFile(label: "Date of Birth", default_val: "22/10/2000"),
                   inputFile(label: "Country/Region", default_val: "Turkey"),
-                  inputFile(label: "Job",default_val: "Computer Engineer" ),
+                  inputFile(label: "Job",default_val: "Doctor" ),
                   SizedBox(height: 20,),
                   MaterialButton(
                     minWidth: double.infinity,

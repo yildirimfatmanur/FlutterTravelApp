@@ -1,7 +1,23 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:find_travel_companion/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+
 class SignupPage extends StatelessWidget {
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _mailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  final CollectionReference _users = FirebaseFirestore.instance.collection("users");
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final String _username = "";
+  final String _mail = "";
+  final String _password = "";
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,14 +76,25 @@ class SignupPage extends StatelessWidget {
                   ),
                 ],
               ),
-              Column(
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    reusableTextField("Enter User Name",Icons.person_outline,false,_usernameController),
+                    const SizedBox(
+                      height: 20,),
+                    reusableTextField("Enter E-mail", Icons.mail_outlined, false,
+                    _mailController),
+                const SizedBox(
+                  height: 20,
+                ),
+                reusableTextField("Enter Password", Icons.lock_outlined, true,
+                    _passwordController),
+                const SizedBox(
+                  height: 20,)
 
-                children: <Widget>[
-                  inputFile(label: "Username"),
-                  inputFile(label: "Email"),
-                  inputFile(label: "Password", obscureText: true),
-                  inputFile(label: "Confirm Password ", obscureText: true),
-                ],
+                     ],
+                ),
               ),
               Container(
                 padding: EdgeInsets.only(top: 0, left: 0),
@@ -101,17 +128,6 @@ class SignupPage extends StatelessWidget {
                   ),
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  //Text("Already have an account?"),
-                  //Text(
-                    //" Login",
-                    //style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
-                  //textButton ekle
-                  //)
-                ],
-              )
             ],
           ),
         ),
@@ -120,39 +136,37 @@ class SignupPage extends StatelessWidget {
   }
 }
 
-Widget inputFile({label, obscureText = false}) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Text(
-        label,
-        style: TextStyle(
-            fontSize: 15, fontWeight: FontWeight.w400, color: Colors.white),
+TextFormField reusableTextField(String text, IconData icon, bool isPasswordType,
+    TextEditingController controller) {
+  return TextFormField(
+    controller: controller,
+    obscureText: isPasswordType,
+    enableSuggestions: !isPasswordType,
+    autocorrect: !isPasswordType,
+    cursorColor: Colors.white,
+
+    style: TextStyle(color: Colors.white.withOpacity(0.9)),
+    decoration: InputDecoration(
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Color(0xFF9CA6FF)),
+        borderRadius: BorderRadius.circular(15),
       ),
-      SizedBox(
-        height: 5,
+      prefixIcon: Icon(
+        icon,
+        color: Colors.white70,
       ),
-      TextField(
+      labelText: text,
+      labelStyle: TextStyle(color: Colors.white.withOpacity(0.9)),
+      filled: true,
+      floatingLabelBehavior: FloatingLabelBehavior.never,
 
-        obscureText: obscureText,
-        decoration: InputDecoration(
+      border: OutlineInputBorder(
+        borderSide: BorderSide(color: Color(0xFF9CA6FF)),
+        borderRadius: BorderRadius.circular(15),
 
-            contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0xFF9CA6FF)),
-              borderRadius: BorderRadius.circular(15),
-            ),
-
-            border: OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xFF9CA6FF)),
-                borderRadius: BorderRadius.circular(15),
-
-            )
-        ),
       ),
-      SizedBox(
-        height: 10,
-      )
-    ],
+    ),
+
+
   );
 }
